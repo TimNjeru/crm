@@ -5,7 +5,6 @@ from frappe import _
 from frappe.custom.doctype.property_setter.property_setter import make_property_setter
 from frappe.desk.form.assign_to import set_status
 from frappe.model import no_value_fields
-from frappe.model.delete_doc import get_dynamic_linked_docs, get_linked_docs
 from frappe.model.document import get_controller
 from frappe.utils import make_filter_tuple
 from pypika import Criterion
@@ -13,6 +12,130 @@ from pypika import Criterion
 from crm.api.views import get_views
 from crm.fcrm.doctype.crm_form_script.crm_form_script import get_form_script
 from crm.utils import is_frappe_version
+
+try:
+	from frappe.model.delete_doc import get_dynamic_linked_docs, get_linked_docs
+except ImportError:
+	from frappe.model.docstatus import DocStatus
+	from frappe.model.dynamic_links import get_dynamic_link_map
+	from frappe.model.rename_doc import get_link_fields
+
+	def _docstatus(value):
+		return DocStatus(value or 0)
+
+	def _append_linked_doc(docs, reference_doctype, reference_docname):
+		if reference_doctype and reference_docname:
+			docs.append(
+				{
+					"reference_doctype": reference_doctype,
+					"reference_docname": reference_docname,
+				}
+			)
+
+	def get_linked_docs(doc, method="Delete"):
+		linked_docs = []
+		ignored_doctypes = set()
+
+		if method == "Cancel" and (doc_ignore_flags := doc.get("ignore_linked_doctypes")):
+			ignored_doctypes.update(doc_ignore_flags)
+		if method == "Delete":
+			ignored_doctypes.update(frappe.get_hooks("ignore_links_on_delete"))
+
+		for link_field in get_link_fields(doc.doctype):
+			link_dt = link_field["parent"]
+			link_fieldname = link_field["fieldname"]
+			is_single = link_field["issingle"]
+
+			if link_dt in ignored_doctypes or (link_fieldname == "amended_from" and method == "Cancel"):
+				continue
+
+			try:
+				meta = frappe.get_meta(link_dt)
+			except frappe.DoesNotExistError:
+				frappe.clear_last_message()
+				continue
+
+			if is_single:
+				if frappe.db.get_single_value(link_dt, link_fieldname) == doc.name:
+					_append_linked_doc(linked_docs, link_dt, link_dt)
+				continue
+
+			fields = ["name", "docstatus"]
+			if meta.istable:
+				fields.extend(["parent", "parenttype"])
+
+			for item in frappe.db.get_values(link_dt, {link_fieldname: doc.name}, fields, as_dict=True):
+				item_parent = getattr(item, "parent", None)
+				linked_parent_doctype = item.parenttype if item_parent else link_dt
+
+				if linked_parent_doctype in ignored_doctypes:
+					continue
+
+				if method != "Delete" and (
+					method != "Cancel" or not _docstatus(item.docstatus).is_submitted()
+				):
+					continue
+
+				if link_dt == doc.doctype and (item_parent or item.name) == doc.name:
+					continue
+
+				_append_linked_doc(linked_docs, linked_parent_doctype, item_parent or item.name)
+
+		return linked_docs
+
+	def get_dynamic_linked_docs(doc, method="Delete"):
+		linked_docs = []
+
+		for df in get_dynamic_link_map().get(doc.doctype, []):
+			ignore_linked_doctypes = doc.get("ignore_linked_doctypes") or []
+
+			if df.parent in frappe.get_hooks("ignore_links_on_delete") or (
+				df.parent in ignore_linked_doctypes and method == "Cancel"
+			):
+				continue
+
+			meta = frappe.get_meta(df.parent)
+			if meta.issingle:
+				refdoc = frappe.db.get_singles_dict(df.parent)
+				refdocstatus = _docstatus(refdoc.get("docstatus"))
+				if (
+					refdoc.get(df.options) == doc.doctype
+					and refdoc.get(df.fieldname) == doc.name
+					and (
+						(method == "Delete" and not refdocstatus.is_cancelled())
+						or (method == "Cancel" and refdocstatus.is_submitted())
+					)
+				):
+					_append_linked_doc(linked_docs, df.parent, df.parent)
+				continue
+
+			fields = ["name", "docstatus"]
+			if meta.istable:
+				fields.extend(["parent", "parenttype"])
+
+			for refdoc in frappe.db.get_values(
+				df.parent,
+				{df.options: doc.doctype, df.fieldname: doc.name},
+				fields,
+				as_dict=True,
+			):
+				refdocstatus = _docstatus(refdoc.docstatus)
+				if not (
+					(method == "Delete" and not refdocstatus.is_cancelled())
+					or (method == "Cancel" and refdocstatus.is_submitted())
+				):
+					continue
+
+				reference_doctype = refdoc.parenttype if meta.istable else df.parent
+				reference_docname = refdoc.parent if meta.istable else refdoc.name
+				if reference_doctype in frappe.get_hooks("ignore_links_on_delete") or (
+					reference_doctype in ignore_linked_doctypes and method == "Cancel"
+				):
+					continue
+
+				_append_linked_doc(linked_docs, reference_doctype, reference_docname)
+
+		return linked_docs
 
 COUNT_NAME = (
 	{"COUNT": "name", "as": "total_count"}
