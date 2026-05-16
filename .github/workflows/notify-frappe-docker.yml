@@ -1,0 +1,36 @@
+name: Notify frappe_docker CRM deploy
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    name: Trigger frappe_docker development deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch CRM deploy event
+        env:
+          GH_TOKEN: ${{ secrets.FRAPPE_DOCKER_DISPATCH_TOKEN }}
+          CRM_SHA: ${{ github.sha }}
+          CRM_REF: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${GH_TOKEN:-}" ]]; then
+            echo "::notice::FRAPPE_DOCKER_DISPATCH_TOKEN is not set; skipping frappe_docker dispatch."
+            exit 0
+          fi
+
+          gh api \
+            --method POST \
+            repos/TimNjeru/frappe_docker/actions/workflows/deploy-crm-app-aws.yml/dispatches \
+            -f ref=develop \
+            -f inputs[target]=development \
+            -f inputs[crm_ref]="${CRM_SHA}"
+
+          echo "Requested frappe_docker CRM deploy for ${CRM_REF}@${CRM_SHA}"
