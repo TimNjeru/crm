@@ -156,23 +156,6 @@ select {
   @apply !bg-surface-gray-1;
 }
 
-/* ---------- Secondary buttons (outline style) ----------
- * Non-solid frappe-ui buttons get a white bg + subtle border.
- * Solid CTAs (Create, Save) are excluded by their dark bg classes.
- */
-button[class*='bg-surface-gray-2']:not([class*='bg-ink-gray-9']):not([class*='bg-surface-gray-7']),
-button[class*='bg-surface-gray-3']:not([class*='bg-ink-gray-9']):not([class*='bg-surface-gray-7']) {
-  @apply !bg-surface-white border border-outline-gray-2;
-  transition:
-    background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out,
-    box-shadow 0.15s ease-in-out;
-}
-button[class*='bg-surface-gray-2']:hover:not([class*='bg-ink-gray-9']):not([class*='bg-surface-gray-7']),
-button[class*='bg-surface-gray-3']:hover:not([class*='bg-ink-gray-9']):not([class*='bg-surface-gray-7']) {
-  @apply !bg-surface-gray-1 border-outline-gray-3;
-}
-
 /* Solid CTAs: subtle hover lift */
 button[class*='bg-surface-gray-7'],
 button[class*='bg-ink-gray-9'] {
@@ -188,22 +171,20 @@ button[class*='bg-ink-gray-9'] {
 [id*='headlessui-listbox-options'],
 [id*='headlessui-combobox-options'],
 [id*='headlessui-popover-panel'],
-.dropdown-menu,
-[class*='DropdownPanel'],
-[class*='dropdown-panel'] {
-  @apply !bg-surface-white border border-outline-gray-2;
+.dropdown-menu {
+  @apply !bg-surface-white border border-outline-gray-1;
   border-radius: 0.75rem !important;
   box-shadow:
     0 12px 32px -8px rgb(0 0 0 / 0.14),
     0 6px 16px -6px rgb(0 0 0 / 0.08) !important;
-  padding: 6px !important;
+  padding: 4px !important;
   overflow: hidden !important;
 }
 
 [role='menuitem'],
 [role='option'] {
   border-radius: 0.5rem !important;
-  padding: 7px 10px !important;
+  padding: 8px 10px !important;
   transition:
     background-color 0.12s ease-in-out,
     color 0.12s ease-in-out;
@@ -217,9 +198,34 @@ button[class*='bg-ink-gray-9'] {
   @apply !bg-surface-gray-2 !text-ink-gray-9;
 }
 
-/* Dropdown trigger buttons */
-button[aria-haspopup],
-button[class*='form-control'] {
+/* Search inputs INSIDE dropdown panels: borderless to avoid double-border look */
+[role='menu'] input[type='text'],
+[role='menu'] input[type='search'],
+[role='listbox'] input[type='text'],
+[role='listbox'] input[type='search'],
+[id*='headlessui-menu-items'] input[type='text'],
+[id*='headlessui-menu-items'] input[type='search'],
+[id*='headlessui-popover-panel'] input[type='text'],
+[id*='headlessui-popover-panel'] input[type='search'] {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+[role='menu'] input[type='text']:focus,
+[role='menu'] input[type='search']:focus,
+[role='listbox'] input[type='text']:focus,
+[role='listbox'] input[type='search']:focus,
+[id*='headlessui-menu-items'] input[type='text']:focus,
+[id*='headlessui-menu-items'] input[type='search']:focus,
+[id*='headlessui-popover-panel'] input[type='text']:focus,
+[id*='headlessui-popover-panel'] input[type='search']:focus {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Dropdown trigger buttons: smooth rounded chip look */
+button[aria-haspopup] {
   border-radius: 0.5rem !important;
   transition:
     border-color 0.15s ease-in-out,
