@@ -10,7 +10,10 @@ export default {
     './node_modules/frappe-ui/frappe/**/*.{vue,js,ts,jsx,tsx}',
     '../node_modules/frappe-ui/frappe/**/*.{vue,js,ts,jsx,tsx}',
   ],
-  safelist: [{ pattern: /!(text|bg)-/, variants: ['hover', 'active'] }],
+  safelist: [
+    { pattern: /!(text|bg)-/, variants: ['hover', 'active'] },
+    { pattern: /!(border|rounded|ring|font)/, variants: ['hover', 'focus', 'active'] },
+  ],
   theme: {
     extend: {},
   },
