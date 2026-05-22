@@ -41,6 +41,15 @@
       </template>
     </LayoutHeader>
 
+    <div class="px-5 pt-5">
+      <div class="text-xl font-semibold text-ink-gray-9">
+        {{ __(greeting) }}, {{ currentUserName }}
+      </div>
+      <div class="text-sm text-ink-gray-6 mt-1">
+        {{ __('Your business at a glance') }}
+      </div>
+    </div>
+
     <div class="p-5 pb-2 flex items-center gap-4">
       <Dropdown
         v-if="!showDatePicker"
@@ -144,6 +153,7 @@ import ViewBreadcrumbs from '@/components/ViewBreadcrumbs.vue'
 import LayoutHeader from '@/components/LayoutHeader.vue'
 import Link from '@/components/Controls/Link.vue'
 import { usersStore } from '@/stores/users'
+import { sessionStore } from '@/stores/session'
 import { copy } from '@/utils'
 import { getLastXDays, formatter, formatRange } from '@/utils/dashboard'
 import {
@@ -156,6 +166,18 @@ import {
 import { ref, reactive, computed, provide } from 'vue'
 
 const { users, getUser, isManager, isAdmin } = usersStore()
+const session = sessionStore()
+
+const currentUserName = computed(
+  () => getUser(session.user)?.full_name || session.user || '',
+)
+
+const greeting = computed(() => {
+  const hour = new Date().getHours()
+  if (hour < 12) return 'Good morning'
+  if (hour < 17) return 'Good afternoon'
+  return 'Good evening'
+})
 
 const editing = ref(false)
 
