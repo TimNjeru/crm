@@ -12,12 +12,7 @@ export default {
   ],
   safelist: [{ pattern: /!(text|bg)-/, variants: ['hover', 'active'] }],
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        outfit: ['Outfit', 'sans-serif'],
-      },
-    },
+    extend: {},
   },
   plugins: [],
 }

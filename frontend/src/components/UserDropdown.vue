@@ -21,7 +21,7 @@
           "
         >
           <div
-            class="text-base font-outfit font-semibold tracking-tight leading-none text-ink-gray-9 truncate"
+            class="text-base font-medium leading-none text-ink-gray-9 truncate"
           >
             {{ __(brand.name || 'CRM') }}
           </div>
