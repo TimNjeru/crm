@@ -42,10 +42,10 @@
     </LayoutHeader>
 
     <div class="px-5 pt-5">
-      <div class="text-xl font-semibold text-ink-gray-9">
+      <div class="text-2xl font-outfit font-medium tracking-tight text-ink-gray-9">
         {{ __(greeting) }}, {{ currentUserName }}
       </div>
-      <div class="text-sm text-ink-gray-6 mt-1">
+      <div class="text-xs font-normal text-ink-gray-5 mt-1.5 uppercase tracking-wider">
         {{ __('Your business at a glance') }}
       </div>
     </div>
