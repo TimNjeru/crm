@@ -90,7 +90,7 @@ div[class*='fixed'][class*='inset-0'][class*='bg-black'] {
   -webkit-backdrop-filter: blur(4px) !important;
 }
 
-/* Input fields: subtle, consistent border + focus state */
+/* Input fields: subtle, consistent focus state (all inputs everywhere) */
 input[type='text'],
 input[type='email'],
 input[type='password'],
@@ -102,7 +102,7 @@ input[type='date'],
 input[type='datetime-local'],
 textarea,
 select {
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, background-color 0.15s ease-in-out !important;
 }
 input[type='text']:focus-visible,
 input[type='email']:focus-visible,
@@ -116,6 +116,53 @@ input[type='datetime-local']:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12) !important; /* soft blue focus ring */
+}
+
+/* Form inputs INSIDE modals/dialogs: white with subtle border (cleaner for data entry) */
+/* Scoped to dialogs so list-page filter chips keep their gray fill */
+[role='dialog'] input[type='text'],
+[role='dialog'] input[type='email'],
+[role='dialog'] input[type='password'],
+[role='dialog'] input[type='search'],
+[role='dialog'] input[type='number'],
+[role='dialog'] input[type='tel'],
+[role='dialog'] input[type='url'],
+[role='dialog'] input[type='date'],
+[role='dialog'] input[type='datetime-local'],
+[role='dialog'] textarea,
+[role='dialog'] select,
+[id^='headlessui-dialog'] input[type='text'],
+[id^='headlessui-dialog'] input[type='email'],
+[id^='headlessui-dialog'] input[type='password'],
+[id^='headlessui-dialog'] input[type='search'],
+[id^='headlessui-dialog'] input[type='number'],
+[id^='headlessui-dialog'] input[type='tel'],
+[id^='headlessui-dialog'] input[type='url'],
+[id^='headlessui-dialog'] input[type='date'],
+[id^='headlessui-dialog'] input[type='datetime-local'],
+[id^='headlessui-dialog'] textarea,
+[id^='headlessui-dialog'] select {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(226, 232, 240, 0.9) !important; /* slate-200 */
+}
+
+[role='dialog'] input:hover,
+[role='dialog'] textarea:hover,
+[role='dialog'] select:hover,
+[id^='headlessui-dialog'] input:hover,
+[id^='headlessui-dialog'] textarea:hover,
+[id^='headlessui-dialog'] select:hover {
+  border-color: rgba(203, 213, 225, 1) !important; /* slate-300 */
+}
+
+[role='dialog'] input:focus-visible,
+[role='dialog'] textarea:focus-visible,
+[role='dialog'] select:focus-visible,
+[id^='headlessui-dialog'] input:focus-visible,
+[id^='headlessui-dialog'] textarea:focus-visible,
+[id^='headlessui-dialog'] select:focus-visible {
+  border-color: rgb(59, 130, 246) !important; /* blue-500 */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12) !important;
 }
 
 /* List rows: smoother hover transition (used in Leads/Deals/Contacts/etc.) */
