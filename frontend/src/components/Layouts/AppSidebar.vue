@@ -39,11 +39,11 @@
           <template #header="{ opened, hide, toggle }">
             <div
               v-if="!hide"
-              class="flex items-center cursor-pointer gap-1.5 text-[10px] font-semibold text-ink-gray-4 transition-all duration-300 ease-in-out uppercase tracking-wider"
+              class="flex items-center cursor-pointer gap-1.5 text-[11px] font-semibold text-ink-gray-5 transition-all duration-300 ease-in-out uppercase tracking-[0.08em]"
               :class="
                 isSidebarCollapsed
                   ? 'h-0 overflow-hidden opacity-0'
-                  : 'px-4 pt-[11px] pb-2.5 w-auto opacity-100'
+                  : 'px-4 pt-4 pb-2 w-auto opacity-100'
               "
               @click="toggle()"
             >
@@ -63,7 +63,7 @@
               :label="__(link.label)"
               :to="link.to"
               :isCollapsed="isSidebarCollapsed"
-              class="mx-2 my-[1.5px]"
+              class="mx-2 my-1"
             />
           </nav>
         </CollapsibleSection>
