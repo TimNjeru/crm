@@ -12,7 +12,20 @@ export default {
   ],
   safelist: [
     { pattern: /!(text|bg)-/, variants: ['hover', 'active'] },
-    { pattern: /!(border|rounded|ring|font)/, variants: ['hover', 'focus', 'active'] },
+    // Specific !important utilities used by index.css @apply directives.
+    // Listed explicitly (not as a broad pattern) to avoid OOM during build.
+    '!border',
+    '!border-b',
+    '!border-outline-gray-1',
+    '!border-outline-gray-2',
+    '!border-outline-gray-3',
+    '!rounded-lg',
+    '!rounded-xl',
+    '!rounded-2xl',
+    '!rounded-3xl',
+    '!ring-2',
+    '!ring-outline-gray-3',
+    '!font-semibold',
   ],
   theme: {
     extend: {},
