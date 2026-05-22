@@ -1,5 +1,15 @@
 @import 'frappe-ui/style.css';
 
+@layer base {
+  body {
+    @apply font-sans antialiased text-ink-gray-9;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+
 @layer components {
   .prose-f {
     @apply break-all
@@ -21,4 +31,93 @@
 			prose-th:p-2
 			prose-th:relative;
   }
+}
+
+/* Custom Global Utility Styles for Outfit Font */
+.font-outfit {
+  font-family: 'Outfit', sans-serif !important;
+}
+
+/* Headings and UI Titles */
+h1, h2, h3, h4, h5, h6, 
+.view-title, 
+[class*="ViewTitle"], 
+[class*="breadcrumbs"] {
+  font-family: 'Outfit', sans-serif !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* Premium SealsCRM Card Layouts & Chart Overrides */
+.frappe-card, 
+.frappe-number-chart,
+[class*="number_chart"],
+[class*="axis_chart"],
+[class*="donut_chart"],
+.grid-layout-item > div > div {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(226, 232, 240, 0.6) !important; /* border-slate-200/60 */
+  border-radius: 24px !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 1px 2px 0 rgba(0, 0, 0, 0.01) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.frappe-card:hover, 
+.frappe-number-chart:hover,
+[class*="number_chart"]:hover,
+[class*="axis_chart"]:hover,
+[class*="donut_chart"]:hover,
+.grid-layout-item > div > div:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02) !important;
+  border-color: rgba(203, 213, 225, 0.7) !important;
+}
+
+/* Lighter typography weight details inside Number Chart cards */
+.frappe-number-chart .value,
+.frappe-number-chart-value,
+[class*="number_chart"] [class*="value"],
+[class*="number-chart-value"],
+.number-chart-value {
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 500 !important; /* font-medium instead of thick bold */
+  font-size: 1.875rem !important; /* text-3xl */
+  letter-spacing: -0.03em !important;
+  color: #1e293b !important; /* slate-800 */
+}
+
+.frappe-number-chart .label,
+.frappe-number-chart-label,
+[class*="number_chart"] [class*="label"],
+[class*="number-chart-label"],
+.number-chart-label {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important; /* font-normal instead of thick semibold */
+  font-size: 0.875rem !important; /* text-sm */
+  color: #64748b !important; /* text-slate-500 */
+}
+
+/* Lists and Data Tables Typography Refinement */
+.frappe-list-row,
+.frappe-table-row,
+[class*="list-row"],
+[class*="table-row"],
+[class*="ListRow"] {
+  font-weight: 400 !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+/* Make sure specific bold fields or numbers inside lists are elegant font-medium */
+[class*="list-row"] [class*="bold"],
+[class*="list-row"] [class*="semibold"],
+.frappe-list-row .font-semibold,
+[class*="ListRow"] .font-semibold {
+  font-weight: 500 !important;
+}
+
+/* Soften all border outlines to feel high-end and subtle */
+.border,
+.border-t,
+.border-b,
+.border-l,
+.border-r {
+  border-color: rgba(241, 245, 249, 0.9) !important; /* slate-100 */
 }
