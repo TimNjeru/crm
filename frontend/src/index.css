@@ -65,3 +65,261 @@
 .border-r {
   border-color: rgba(241, 245, 249, 0.9) !important; /* slate-100 */
 }
+
+/* ---------- Cross-page polish (propagates everywhere) ---------- */
+
+/* Tabs: cleaner active indicator (used on Lead/Deal/Contact/Org detail pages) */
+[role='tab'] {
+  transition: color 0.2s ease-in-out !important;
+}
+[role='tab'][aria-selected='true'] {
+  font-weight: 600 !important;
+  color: rgb(15, 23, 42) !important; /* slate-900 */
+}
+[role='tab']:not([aria-selected='true']):hover {
+  color: rgb(51, 65, 85) !important; /* slate-700 */
+}
+
+/* Modal/Dialog panels: refined rounded corners + softer shadow */
+[role='dialog'],
+[role='dialog'] > div,
+[id*='headlessui-dialog-panel'],
+[id^='headlessui-dialog'] > div > div,
+.bg-surface-modal,
+.dialog-panel,
+[data-headlessui-state] > div[class*='rounded-xl'],
+[data-headlessui-state] > div[class*='rounded-2xl'] {
+  border-radius: 20px !important;
+  box-shadow:
+    0 20px 60px -12px rgba(15, 23, 42, 0.22),
+    0 8px 24px -8px rgba(15, 23, 42, 0.1) !important;
+  overflow: hidden !important;
+}
+
+/* Modal backdrop: softer scrim */
+[role='dialog'] ~ div[class*='fixed'][class*='inset-0'],
+[id^='headlessui-dialog'] > div[class*='fixed'][class*='bg-black'],
+[class*='dialog-backdrop'],
+div[class*='fixed'][class*='inset-0'][class*='bg-black'] {
+  background-color: rgba(15, 23, 42, 0.4) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
+
+/* Input fields: subtle, consistent border + focus state */
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='search'],
+input[type='number'],
+input[type='tel'],
+input[type='url'],
+input[type='date'],
+input[type='datetime-local'],
+textarea,
+select {
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+input[type='text']:focus-visible,
+input[type='email']:focus-visible,
+input[type='password']:focus-visible,
+input[type='search']:focus-visible,
+input[type='number']:focus-visible,
+input[type='tel']:focus-visible,
+input[type='url']:focus-visible,
+input[type='date']:focus-visible,
+input[type='datetime-local']:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12) !important; /* soft blue focus ring */
+}
+
+/* List rows: smoother hover transition (used in Leads/Deals/Contacts/etc.) */
+[class*='list-row'],
+[class*='ListRow'] {
+  transition: background-color 0.15s ease-in-out !important;
+}
+
+/* Detail page side panels & activity timeline: subtle separators */
+[class*='side-panel'],
+[class*='SidePanel'],
+[class*='activity'],
+[class*='Activity'] {
+  --separator: rgba(241, 245, 249, 0.9);
+}
+
+/* Buttons: subtle hover lift on solid variants only (additive, won't break shapes) */
+button[class*='bg-surface-gray-7'],
+button[class*='bg-ink-gray-9'] {
+  transition:
+    box-shadow 0.15s ease-in-out,
+    transform 0.15s ease-in-out !important;
+}
+button[class*='bg-surface-gray-7']:hover,
+button[class*='bg-ink-gray-9']:hover {
+  box-shadow: 0 4px 12px -4px rgba(15, 23, 42, 0.18) !important;
+}
+
+/* Dropdowns / Menus / Listboxes: refined rounded corners, soft shadow, padding */
+[role='menu'],
+[role='listbox'],
+[id*='headlessui-menu-items'],
+[id*='headlessui-listbox-options'],
+[id*='headlessui-combobox-options'],
+[id*='headlessui-popover-panel'],
+.dropdown-menu,
+[class*='DropdownPanel'],
+[class*='dropdown-panel'] {
+  border-radius: 14px !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
+  background-color: #ffffff !important;
+  box-shadow:
+    0 12px 32px -8px rgba(15, 23, 42, 0.14),
+    0 6px 16px -6px rgba(15, 23, 42, 0.08) !important;
+  padding: 6px !important;
+  overflow: hidden !important;
+}
+
+/* Dropdown items: comfortable padding, rounded hover state */
+[role='menuitem'],
+[role='option'] {
+  border-radius: 8px !important;
+  padding: 7px 10px !important;
+  transition: background-color 0.12s ease-in-out, color 0.12s ease-in-out !important;
+}
+[role='menuitem']:hover,
+[role='menuitem']:focus,
+[role='menuitem'][data-headlessui-state*='active'],
+[role='option']:hover,
+[role='option'][aria-selected='true'],
+[role='option'][data-headlessui-state*='active'] {
+  background-color: rgba(241, 245, 249, 0.85) !important;
+  color: rgb(15, 23, 42) !important;
+}
+
+/* Dropdown trigger buttons (filter chips, view selectors, etc.) */
+button[aria-haspopup],
+button[class*='form-control'] {
+  border-radius: 8px !important;
+  transition: border-color 0.15s ease-in-out, background-color 0.15s ease-in-out !important;
+}
+
+/* Tooltip / popover panels */
+[role='tooltip'] {
+  border-radius: 8px !important;
+  box-shadow: 0 6px 18px -4px rgba(15, 23, 42, 0.18) !important;
+  padding: 6px 10px !important;
+}
+
+/* ---------- Tables (list views, settings, data tables) ---------- */
+table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+table thead th {
+  font-weight: 600 !important;
+  color: rgb(71, 85, 105) !important; /* slate-600 */
+  background-color: rgba(248, 250, 252, 0.6) !important; /* slate-50/60 */
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8) !important;
+  padding: 10px 14px !important;
+  font-size: 12px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+table tbody td {
+  padding: 12px 14px !important;
+  border-bottom: 1px solid rgba(241, 245, 249, 0.9) !important;
+  color: rgb(30, 41, 59) !important; /* slate-800 */
+}
+
+table tbody tr {
+  transition: background-color 0.12s ease-in-out !important;
+}
+
+table tbody tr:hover {
+  background-color: rgba(248, 250, 252, 0.7) !important; /* slate-50/70 */
+}
+
+table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* Frappe-ui list-view header row: same treatment */
+[class*='list-header'],
+[class*='ListHeader'],
+[class*='list-view-header'] {
+  background-color: rgba(248, 250, 252, 0.6) !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8) !important;
+  font-weight: 600 !important;
+}
+
+/* List rows hover (covers div-based virtual lists used by frappe-ui) */
+[role='row']:hover {
+  background-color: rgba(248, 250, 252, 0.7) !important;
+}
+
+/* ---------- Kanban cards ---------- */
+/* Targets KanbanView's card pattern: rounded-lg border bg-surface-white */
+[class*='Kanban'] [class*='rounded-lg'][class*='border'][class*='bg-surface-white'],
+[class*='kanban'] [class*='rounded-lg'][class*='border'][class*='bg-surface-white'] {
+  border-radius: 14px !important;
+  border-color: rgba(226, 232, 240, 0.6) !important;
+  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.04) !important;
+  transition:
+    box-shadow 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    transform 0.15s ease-in-out !important;
+}
+
+[class*='Kanban'] [class*='rounded-lg'][class*='border'][class*='bg-surface-white']:hover,
+[class*='kanban'] [class*='rounded-lg'][class*='border'][class*='bg-surface-white']:hover {
+  border-color: rgba(203, 213, 225, 0.8) !important;
+  box-shadow:
+    0 6px 18px -6px rgba(15, 23, 42, 0.1),
+    0 2px 6px -2px rgba(15, 23, 42, 0.04) !important;
+  transform: translateY(-1px);
+}
+
+/* ---------- Activity timeline (Lead/Deal detail right panel) ---------- */
+/* Common activity card classes used by Activities/*.vue */
+[class*='ActivityHeader'],
+[class*='activity-header'],
+[class*='CommentArea'],
+[class*='NoteArea'],
+[class*='TaskArea'],
+[class*='EventArea'],
+[class*='EmailArea'],
+[class*='CallArea'],
+[class*='WhatsAppArea'] {
+  transition: background-color 0.15s ease-in-out !important;
+}
+
+/* Activity timeline date dividers and connectors */
+[class*='Activities'] [class*='border-l'],
+[class*='Activities'] [class*='border-r'] {
+  border-color: rgba(226, 232, 240, 0.7) !important;
+}
+
+/* ---------- Avatars (consistent ring) ---------- */
+[class*='Avatar'] img,
+[class*='avatar'] img {
+  transition: opacity 0.15s ease-in-out;
+}
+
+/* ---------- Badges (status chips, pill labels) ---------- */
+[class*='Badge'],
+[class*='badge'],
+.indicator-pill {
+  border-radius: 9999px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Loading skeletons (frappe-ui Skeleton) ---------- */
+[class*='Skeleton'],
+[class*='skeleton'],
+[class*='animate-pulse'] {
+  border-radius: 8px !important;
+}

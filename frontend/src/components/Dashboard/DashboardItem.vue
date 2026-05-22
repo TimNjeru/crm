@@ -45,13 +45,13 @@
     </div>
     <div
       v-else-if="item.type == 'axis_chart'"
-      class="h-full w-full rounded-md bg-surface-white shadow"
+      class="frappe-card h-full w-full overflow-hidden"
     >
       <AxisChart v-if="item.data" :config="item.data" />
     </div>
     <div
       v-else-if="item.type == 'donut_chart'"
-      class="h-full w-full rounded-md bg-surface-white shadow overflow-hidden"
+      class="frappe-card h-full w-full overflow-hidden"
     >
       <DonutChart v-if="item.data" :config="item.data" />
     </div>

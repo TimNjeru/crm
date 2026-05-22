@@ -41,16 +41,16 @@
       </template>
     </LayoutHeader>
 
-    <div class="px-5 pt-5">
-      <div class="text-xl font-medium text-ink-gray-9">
+    <div class="px-5 pt-6 pb-1">
+      <div class="text-2xl font-semibold text-ink-gray-9 tracking-tight">
         {{ __(greeting) }}, {{ currentUserName }}
       </div>
-      <div class="text-xs font-normal text-ink-gray-5 mt-1.5 uppercase tracking-wider">
+      <div class="text-sm text-ink-gray-5 mt-1.5">
         {{ __('Your business at a glance') }}
       </div>
     </div>
 
-    <div class="p-5 pb-2 flex items-center gap-4">
+    <div class="px-5 pt-4 pb-2 flex items-center gap-4">
       <Dropdown
         v-if="!showDatePicker"
         v-model="preset"

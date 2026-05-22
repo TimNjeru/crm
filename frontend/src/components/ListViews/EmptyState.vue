@@ -1,16 +1,20 @@
 <template>
   <div class="relative flex h-full w-full justify-center">
     <div
-      class="absolute left-1/2 flex -translate-x-1/2 flex-col items-center gap-3"
+      class="absolute left-1/2 flex -translate-x-1/2 flex-col items-center gap-5"
       :class="widthClass"
       :style="{ top: top }"
     >
-      <Icon :icon="icon" class="size-7.5 text-ink-gray-5" />
-      <div class="flex flex-col items-center gap-1">
-        <span class="text-lg font-medium text-ink-gray-8">
+      <div
+        class="h-16 w-16 rounded-2xl bg-surface-gray-2 flex items-center justify-center"
+      >
+        <Icon :icon="icon" class="size-7 text-ink-gray-6" />
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <span class="text-lg font-semibold text-ink-gray-9 tracking-tight">
           {{ computedTitle }}
         </span>
-        <span class="text-center text-p-base text-ink-gray-6">
+        <span class="text-center text-sm text-ink-gray-6 leading-relaxed">
           {{ computedDescription }}
         </span>
       </div>
