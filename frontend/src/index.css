@@ -80,23 +80,7 @@
   color: rgb(51, 65, 85) !important; /* slate-700 */
 }
 
-/* Modal/Dialog panels: refined rounded corners + softer shadow */
-[role='dialog'],
-[role='dialog'] > div,
-[id*='headlessui-dialog-panel'],
-[id^='headlessui-dialog'] > div > div,
-.bg-surface-modal,
-.dialog-panel,
-[data-headlessui-state] > div[class*='rounded-xl'],
-[data-headlessui-state] > div[class*='rounded-2xl'] {
-  border-radius: 20px !important;
-  box-shadow:
-    0 20px 60px -12px rgba(15, 23, 42, 0.22),
-    0 8px 24px -8px rgba(15, 23, 42, 0.1) !important;
-  overflow: hidden !important;
-}
-
-/* Modal backdrop: softer scrim */
+/* Modal backdrop: softer scrim with subtle blur */
 [role='dialog'] ~ div[class*='fixed'][class*='inset-0'],
 [id^='headlessui-dialog'] > div[class*='fixed'][class*='bg-black'],
 [class*='dialog-backdrop'],
