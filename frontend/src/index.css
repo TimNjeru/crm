@@ -9,7 +9,6 @@
   }
 }
 
-
 @layer components {
   .prose-f {
     @apply break-all
@@ -33,64 +32,68 @@
   }
 }
 
-/* Premium SealsCRM Card Layouts & Chart Overrides */
+/* ============================================================
+ * SealsCRM polish — all styles use design tokens for dark-mode support
+ * Tokens used: surface-white, surface-gray-1..7, surface-menu-bar,
+ * surface-selected, ink-gray-3..9, outline-gray-1..3
+ * ============================================================ */
+
+/* ---------- Cards: dashboard widgets, chart wrappers ---------- */
 .frappe-card,
 .frappe-number-chart,
-[class*="number_chart"],
-[class*="axis_chart"],
-[class*="donut_chart"],
+[class*='number_chart'],
+[class*='axis_chart'],
+[class*='donut_chart'],
 .grid-layout-item > div > div {
-  background-color: #ffffff !important;
-  border: 1px solid rgba(226, 232, 240, 0.6) !important;
-  border-radius: 24px !important;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 1px 2px 0 rgba(0, 0, 0, 0.01) !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  @apply !bg-surface-white !border !border-outline-gray-1 !rounded-3xl;
+  box-shadow:
+    0 1px 3px 0 rgb(0 0 0 / 0.02),
+    0 1px 2px 0 rgb(0 0 0 / 0.01);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .frappe-card:hover,
 .frappe-number-chart:hover,
-[class*="number_chart"]:hover,
-[class*="axis_chart"]:hover,
-[class*="donut_chart"]:hover,
+[class*='number_chart']:hover,
+[class*='axis_chart']:hover,
+[class*='donut_chart']:hover,
 .grid-layout-item > div > div:hover {
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02) !important;
-  border-color: rgba(203, 213, 225, 0.7) !important;
+  @apply !border-outline-gray-2;
+  box-shadow:
+    0 10px 25px -5px rgb(0 0 0 / 0.05),
+    0 8px 10px -6px rgb(0 0 0 / 0.02);
 }
 
-/* Soften border outlines to feel high-end and subtle */
+/* ---------- Soft border tone for shared chrome ---------- */
 .border,
 .border-t,
 .border-b,
 .border-l,
 .border-r {
-  border-color: rgba(241, 245, 249, 0.9) !important; /* slate-100 */
+  @apply !border-outline-gray-1;
 }
 
-/* ---------- Cross-page polish (propagates everywhere) ---------- */
-
-/* Tabs: cleaner active indicator (used on Lead/Deal/Contact/Org detail pages) */
+/* ---------- Tabs (Lead/Deal/Contact/Org detail pages) ---------- */
 [role='tab'] {
-  transition: color 0.2s ease-in-out !important;
+  transition: color 0.2s ease-in-out;
 }
 [role='tab'][aria-selected='true'] {
-  font-weight: 600 !important;
-  color: rgb(15, 23, 42) !important; /* slate-900 */
+  @apply !text-ink-gray-9 !font-semibold;
 }
 [role='tab']:not([aria-selected='true']):hover {
-  color: rgb(51, 65, 85) !important; /* slate-700 */
+  @apply !text-ink-gray-7;
 }
 
-/* Modal backdrop: softer scrim with subtle blur */
+/* ---------- Modal backdrop (frosted scrim) ---------- */
 [role='dialog'] ~ div[class*='fixed'][class*='inset-0'],
 [id^='headlessui-dialog'] > div[class*='fixed'][class*='bg-black'],
 [class*='dialog-backdrop'],
 div[class*='fixed'][class*='inset-0'][class*='bg-black'] {
-  background-color: rgba(15, 23, 42, 0.4) !important;
-  backdrop-filter: blur(4px) !important;
-  -webkit-backdrop-filter: blur(4px) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
-/* Input fields: subtle, consistent focus state (all inputs everywhere) */
+/* ---------- Input focus state (all inputs everywhere) ---------- */
 input[type='text'],
 input[type='email'],
 input[type='password'],
@@ -102,24 +105,20 @@ input[type='date'],
 input[type='datetime-local'],
 textarea,
 select {
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, background-color 0.15s ease-in-out !important;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out,
+    background-color 0.15s ease-in-out;
 }
-input[type='text']:focus-visible,
-input[type='email']:focus-visible,
-input[type='password']:focus-visible,
-input[type='search']:focus-visible,
-input[type='number']:focus-visible,
-input[type='tel']:focus-visible,
-input[type='url']:focus-visible,
-input[type='date']:focus-visible,
-input[type='datetime-local']:focus-visible,
+input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12) !important; /* soft blue focus ring */
+  @apply !ring-2 !ring-outline-gray-3;
 }
 
-/* Form inputs INSIDE modals/dialogs: white with subtle border (cleaner for data entry) */
-/* Scoped to dialogs so list-page filter chips keep their gray fill */
+/* ---------- Form inputs INSIDE modals/dialogs ---------- */
+/* White-with-border for clean data entry — scoped to dialogs so
+   list-page filter chips keep their default gray fill */
 [role='dialog'] input[type='text'],
 [role='dialog'] input[type='email'],
 [role='dialog'] input[type='password'],
@@ -142,56 +141,60 @@ select:focus-visible {
 [id^='headlessui-dialog'] input[type='datetime-local'],
 [id^='headlessui-dialog'] textarea,
 [id^='headlessui-dialog'] select {
-  background-color: #ffffff !important;
-  border: 1px solid rgba(226, 232, 240, 0.9) !important; /* slate-200 */
+  @apply !bg-surface-white !border !border-outline-gray-2;
 }
-
 [role='dialog'] input:hover,
 [role='dialog'] textarea:hover,
 [role='dialog'] select:hover,
 [id^='headlessui-dialog'] input:hover,
 [id^='headlessui-dialog'] textarea:hover,
 [id^='headlessui-dialog'] select:hover {
-  border-color: rgba(203, 213, 225, 1) !important; /* slate-300 */
+  @apply !border-outline-gray-3;
 }
-
 [role='dialog'] input:focus-visible,
 [role='dialog'] textarea:focus-visible,
 [role='dialog'] select:focus-visible,
 [id^='headlessui-dialog'] input:focus-visible,
 [id^='headlessui-dialog'] textarea:focus-visible,
 [id^='headlessui-dialog'] select:focus-visible {
-  border-color: rgb(59, 130, 246) !important; /* blue-500 */
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12) !important;
+  @apply !ring-2 !ring-outline-gray-3 !border-outline-gray-3;
 }
 
-/* List rows: smoother hover transition (used in Leads/Deals/Contacts/etc.) */
+/* ---------- List rows: smooth hover ---------- */
 [class*='list-row'],
 [class*='ListRow'] {
-  transition: background-color 0.15s ease-in-out !important;
+  transition: background-color 0.15s ease-in-out;
+}
+[role='row']:hover {
+  @apply !bg-surface-gray-1;
 }
 
-/* Detail page side panels & activity timeline: subtle separators */
-[class*='side-panel'],
-[class*='SidePanel'],
-[class*='activity'],
-[class*='Activity'] {
-  --separator: rgba(241, 245, 249, 0.9);
+/* ---------- Secondary buttons (outline style) ----------
+ * All non-solid frappe-ui buttons get a white bg + subtle border.
+ * Solid CTAs (Create, Save) are excluded by their dark bg classes.
+ */
+button[class*='bg-surface-gray-2']:not([class*='bg-ink-gray-9']):not([class*='bg-surface-gray-7']),
+button[class*='bg-surface-gray-3']:not([class*='bg-ink-gray-9']):not([class*='bg-surface-gray-7']) {
+  @apply !bg-surface-white !border !border-outline-gray-2;
+  transition:
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+button[class*='bg-surface-gray-2']:hover:not([class*='bg-ink-gray-9']):not([class*='bg-surface-gray-7']),
+button[class*='bg-surface-gray-3']:hover:not([class*='bg-ink-gray-9']):not([class*='bg-surface-gray-7']) {
+  @apply !bg-surface-gray-1 !border-outline-gray-3;
 }
 
-/* Buttons: subtle hover lift on solid variants only (additive, won't break shapes) */
+/* Solid CTAs: subtle hover lift */
 button[class*='bg-surface-gray-7'],
 button[class*='bg-ink-gray-9'] {
   transition:
     box-shadow 0.15s ease-in-out,
-    transform 0.15s ease-in-out !important;
-}
-button[class*='bg-surface-gray-7']:hover,
-button[class*='bg-ink-gray-9']:hover {
-  box-shadow: 0 4px 12px -4px rgba(15, 23, 42, 0.18) !important;
+    transform 0.15s ease-in-out;
 }
 
-/* Dropdowns / Menus / Listboxes: refined rounded corners, soft shadow, padding */
+/* ---------- Dropdowns / Menus / Listboxes ---------- */
 [role='menu'],
 [role='listbox'],
 [id*='headlessui-menu-items'],
@@ -201,22 +204,21 @@ button[class*='bg-ink-gray-9']:hover {
 .dropdown-menu,
 [class*='DropdownPanel'],
 [class*='dropdown-panel'] {
-  border-radius: 14px !important;
-  border: 1px solid rgba(226, 232, 240, 0.85) !important;
-  background-color: #ffffff !important;
+  @apply !bg-surface-white !border !border-outline-gray-2 !rounded-xl;
   box-shadow:
-    0 12px 32px -8px rgba(15, 23, 42, 0.14),
-    0 6px 16px -6px rgba(15, 23, 42, 0.08) !important;
-  padding: 6px !important;
-  overflow: hidden !important;
+    0 12px 32px -8px rgb(0 0 0 / 0.14),
+    0 6px 16px -6px rgb(0 0 0 / 0.08);
+  padding: 6px;
+  overflow: hidden;
 }
 
-/* Dropdown items: comfortable padding, rounded hover state */
 [role='menuitem'],
 [role='option'] {
-  border-radius: 8px !important;
-  padding: 7px 10px !important;
-  transition: background-color 0.12s ease-in-out, color 0.12s ease-in-out !important;
+  @apply !rounded-lg;
+  padding: 7px 10px;
+  transition:
+    background-color 0.12s ease-in-out,
+    color 0.12s ease-in-out;
 }
 [role='menuitem']:hover,
 [role='menuitem']:focus,
@@ -224,97 +226,83 @@ button[class*='bg-ink-gray-9']:hover {
 [role='option']:hover,
 [role='option'][aria-selected='true'],
 [role='option'][data-headlessui-state*='active'] {
-  background-color: rgba(241, 245, 249, 0.85) !important;
-  color: rgb(15, 23, 42) !important;
+  @apply !bg-surface-gray-2 !text-ink-gray-9;
 }
 
-/* Dropdown trigger buttons (filter chips, view selectors, etc.) */
+/* Dropdown trigger buttons */
 button[aria-haspopup],
 button[class*='form-control'] {
-  border-radius: 8px !important;
-  transition: border-color 0.15s ease-in-out, background-color 0.15s ease-in-out !important;
+  @apply !rounded-lg;
+  transition:
+    border-color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out;
 }
 
-/* Tooltip / popover panels */
+/* ---------- Tooltips ---------- */
 [role='tooltip'] {
-  border-radius: 8px !important;
-  box-shadow: 0 6px 18px -4px rgba(15, 23, 42, 0.18) !important;
-  padding: 6px 10px !important;
+  @apply !rounded-lg;
+  box-shadow: 0 6px 18px -4px rgb(0 0 0 / 0.18);
+  padding: 6px 10px;
 }
 
-/* ---------- Tables (list views, settings, data tables) ---------- */
+/* ---------- Tables ---------- */
 table {
-  border-collapse: separate !important;
-  border-spacing: 0 !important;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 table thead th {
-  font-weight: 600 !important;
-  color: rgb(71, 85, 105) !important; /* slate-600 */
-  background-color: rgba(248, 250, 252, 0.6) !important; /* slate-50/60 */
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8) !important;
-  padding: 10px 14px !important;
-  font-size: 12px !important;
+  @apply !text-ink-gray-6 !bg-surface-gray-1 !border-b !border-outline-gray-1 !font-semibold;
+  padding: 10px 14px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 table tbody td {
-  padding: 12px 14px !important;
-  border-bottom: 1px solid rgba(241, 245, 249, 0.9) !important;
-  color: rgb(30, 41, 59) !important; /* slate-800 */
+  @apply !text-ink-gray-8 !border-b !border-outline-gray-1;
+  padding: 12px 14px;
 }
 
 table tbody tr {
-  transition: background-color 0.12s ease-in-out !important;
+  transition: background-color 0.12s ease-in-out;
 }
 
 table tbody tr:hover {
-  background-color: rgba(248, 250, 252, 0.7) !important; /* slate-50/70 */
+  @apply !bg-surface-gray-1;
 }
 
 table tbody tr:last-child td {
   border-bottom: none !important;
 }
 
-/* Frappe-ui list-view header row: same treatment */
 [class*='list-header'],
 [class*='ListHeader'],
 [class*='list-view-header'] {
-  background-color: rgba(248, 250, 252, 0.6) !important;
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8) !important;
-  font-weight: 600 !important;
-}
-
-/* List rows hover (covers div-based virtual lists used by frappe-ui) */
-[role='row']:hover {
-  background-color: rgba(248, 250, 252, 0.7) !important;
+  @apply !bg-surface-gray-1 !border-b !border-outline-gray-1 !font-semibold;
 }
 
 /* ---------- Kanban cards ---------- */
-/* Targets KanbanView's card pattern: rounded-lg border bg-surface-white */
 [class*='Kanban'] [class*='rounded-lg'][class*='border'][class*='bg-surface-white'],
 [class*='kanban'] [class*='rounded-lg'][class*='border'][class*='bg-surface-white'] {
-  border-radius: 14px !important;
-  border-color: rgba(226, 232, 240, 0.6) !important;
-  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.04) !important;
+  @apply !rounded-2xl !border-outline-gray-1;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.04);
   transition:
     box-shadow 0.15s ease-in-out,
     border-color 0.15s ease-in-out,
-    transform 0.15s ease-in-out !important;
+    transform 0.15s ease-in-out;
 }
 
 [class*='Kanban'] [class*='rounded-lg'][class*='border'][class*='bg-surface-white']:hover,
 [class*='kanban'] [class*='rounded-lg'][class*='border'][class*='bg-surface-white']:hover {
-  border-color: rgba(203, 213, 225, 0.8) !important;
+  @apply !border-outline-gray-2;
   box-shadow:
-    0 6px 18px -6px rgba(15, 23, 42, 0.1),
-    0 2px 6px -2px rgba(15, 23, 42, 0.04) !important;
+    0 6px 18px -6px rgb(0 0 0 / 0.1),
+    0 2px 6px -2px rgb(0 0 0 / 0.04);
   transform: translateY(-1px);
 }
 
-/* ---------- Activity timeline (Lead/Deal detail right panel) ---------- */
-/* Common activity card classes used by Activities/*.vue */
+/* ---------- Activity timeline ---------- */
 [class*='ActivityHeader'],
 [class*='activity-header'],
 [class*='CommentArea'],
@@ -324,22 +312,21 @@ table tbody tr:last-child td {
 [class*='EmailArea'],
 [class*='CallArea'],
 [class*='WhatsAppArea'] {
-  transition: background-color 0.15s ease-in-out !important;
+  transition: background-color 0.15s ease-in-out;
 }
 
-/* Activity timeline date dividers and connectors */
 [class*='Activities'] [class*='border-l'],
 [class*='Activities'] [class*='border-r'] {
-  border-color: rgba(226, 232, 240, 0.7) !important;
+  @apply !border-outline-gray-1;
 }
 
-/* ---------- Avatars (consistent ring) ---------- */
+/* ---------- Avatars ---------- */
 [class*='Avatar'] img,
 [class*='avatar'] img {
   transition: opacity 0.15s ease-in-out;
 }
 
-/* ---------- Badges (status chips, pill labels) ---------- */
+/* ---------- Badges / status pills ---------- */
 [class*='Badge'],
 [class*='badge'],
 .indicator-pill {
@@ -348,9 +335,9 @@ table tbody tr:last-child td {
   letter-spacing: 0.01em;
 }
 
-/* ---------- Loading skeletons (frappe-ui Skeleton) ---------- */
+/* ---------- Loading skeletons ---------- */
 [class*='Skeleton'],
 [class*='skeleton'],
 [class*='animate-pulse'] {
-  border-radius: 8px !important;
+  @apply !rounded-lg;
 }

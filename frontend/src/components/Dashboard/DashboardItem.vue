@@ -75,15 +75,39 @@ const props = defineProps({
 })
 
 const ICON_MAP = {
-  'Total leads': { icon: LucideUsers, badge: 'bg-blue-50 text-blue-500' },
-  'Ongoing deals': { icon: LucideTrendingUp, badge: 'bg-purple-50 text-purple-500' },
-  'Won deals': { icon: LucideTrophy, badge: 'bg-green-50 text-green-600' },
-  'Avg. won deal value': { icon: LucideDollarSign, badge: 'bg-emerald-50 text-emerald-600' },
-  'Avg. deal value': { icon: LucideDollarSign, badge: 'bg-amber-50 text-amber-600' },
-  'Avg. time to close a lead': { icon: LucideClock, badge: 'bg-sky-50 text-sky-500' },
-  'Avg. time to close a deal': { icon: LucideClock, badge: 'bg-rose-50 text-rose-500' },
+  'Total leads': {
+    icon: LucideUsers,
+    badge: 'bg-blue-50 dark:bg-blue-900/30 text-blue-500 dark:text-blue-300',
+  },
+  'Ongoing deals': {
+    icon: LucideTrendingUp,
+    badge: 'bg-purple-50 dark:bg-purple-900/30 text-purple-500 dark:text-purple-300',
+  },
+  'Won deals': {
+    icon: LucideTrophy,
+    badge: 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-300',
+  },
+  'Avg. won deal value': {
+    icon: LucideDollarSign,
+    badge: 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-300',
+  },
+  'Avg. deal value': {
+    icon: LucideDollarSign,
+    badge: 'bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-300',
+  },
+  'Avg. time to close a lead': {
+    icon: LucideClock,
+    badge: 'bg-sky-50 dark:bg-sky-900/30 text-sky-500 dark:text-sky-300',
+  },
+  'Avg. time to close a deal': {
+    icon: LucideClock,
+    badge: 'bg-rose-50 dark:bg-rose-900/30 text-rose-500 dark:text-rose-300',
+  },
 }
-const FALLBACK = { icon: LucideBarChart3, badge: 'bg-gray-100 text-gray-500' }
+const FALLBACK = {
+  icon: LucideBarChart3,
+  badge: 'bg-surface-gray-2 text-ink-gray-7',
+}
 
 const iconStyle = computed(() => ICON_MAP[props.item.data?.title] || FALLBACK)
 
@@ -105,8 +129,8 @@ const hasDelta = computed(() => {
 
 const deltaStyle = computed(() =>
   props.item.data.delta > 0
-    ? 'bg-green-50 text-green-600'
-    : 'bg-red-50 text-red-600',
+    ? 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-300'
+    : 'bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300',
 )
 
 const deltaIcon = computed(() =>
