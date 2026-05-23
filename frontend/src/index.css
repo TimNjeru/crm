@@ -338,3 +338,155 @@ table tbody tr:last-child td {
 [class*='animate-pulse'] {
   border-radius: 0.5rem !important;
 }
+
+/* ============================================================
+ * Detail pages, activities, settings, forms — match dashboard polish
+ * ============================================================ */
+
+/* ---------- Activity items (Lead/Deal detail right panel) ----------
+ * Targets the `.activity` class used by TaskArea, EmailArea, etc.
+ * And the `bg-surface-cards` token (used by EmailArea)
+ */
+.activity {
+  border-radius: 0.875rem !important;
+  transition:
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out !important;
+}
+
+/* Comment / Note / Email content blocks inside activity items */
+[class*='CommentArea'] > div:last-child,
+[class*='NoteArea'] > div:last-child {
+  border-radius: 0.75rem !important;
+}
+
+/* Email cards with their own surface */
+.bg-surface-cards {
+  border-radius: 0.875rem !important;
+  border: 1px solid !important;
+  @apply border-outline-gray-1;
+}
+
+/* ---------- Form sections (Section.vue, used in detail pages + modals) ---------- */
+.section {
+  transition: background-color 0.15s ease-in-out;
+}
+
+/* Section headers: cleaner typography */
+.section > div:first-child[class*='font-medium'] {
+  letter-spacing: -0.005em;
+}
+
+/* ---------- Form fields (Field.vue) ---------- */
+.field {
+  transition: opacity 0.15s ease-in-out;
+}
+
+.field > div:first-child {
+  /* field labels */
+  font-weight: 500 !important;
+}
+
+/* ---------- Filter / Sort / GroupBy / ColumnSettings dropdown panels ----------
+ * Filter.vue and similar use frappe-ui Popover with `bg-surface-modal shadow-2xl`.
+ * Target ONLY when combined with shadow-2xl + ring-1 to avoid hitting
+ * the LeadModal inner body which also uses bg-surface-modal.
+ */
+.bg-surface-modal[class*='shadow-2xl'][class*='ring-1'] {
+  border-radius: 0.75rem !important;
+  box-shadow:
+    0 12px 32px -8px rgb(0 0 0 / 0.14),
+    0 6px 16px -6px rgb(0 0 0 / 0.08) !important;
+  border: 1px solid !important;
+  @apply border-outline-gray-1;
+}
+
+/* Remove the harsh black ring from these popovers */
+.bg-surface-modal[class*='ring-black'] {
+  --tw-ring-color: transparent !important;
+}
+
+/* ---------- Settings panels ----------
+ * Settings/* components mostly use FieldLayout. The container can be
+ * polished via SettingsLayoutBase.vue's content area.
+ */
+[class*='Settings'] [class*='rounded-md'][class*='border'][class*='bg-surface-white'],
+[class*='Settings'] [class*='rounded-lg'][class*='border'][class*='bg-surface-white'] {
+  border-radius: 0.875rem !important;
+  @apply border-outline-gray-1;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.03) !important;
+}
+
+/* ---------- Onboarding / banners ----------
+ * Getting Started, Trial, Signup banners typically render inside the sidebar.
+ * Give them rounded card treatment.
+ */
+[class*='SignupBanner'],
+[class*='TrialBanner'],
+[class*='GettingStartedBanner'],
+[class*='signup-banner'],
+[class*='trial-banner'] {
+  border-radius: 0.875rem !important;
+  transition:
+    box-shadow 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
+}
+
+/* ---------- Notifications dropdown panel ----------
+ * Already inherits the generic [role='menu'] styling.
+ * This adds notification-item-specific polish.
+ */
+[class*='Notification'] [class*='hover:bg-surface-gray'] {
+  transition: background-color 0.15s ease-in-out !important;
+  border-radius: 0.5rem !important;
+}
+
+/* ---------- Detail page chrome ----------
+ * Lead/Deal/Contact/Organization detail pages: tabs + side panel
+ */
+/* Tab indicator under the active tab — make subtler */
+[role='tablist'] [role='tab'][aria-selected='true'] {
+  position: relative;
+}
+
+/* Side panel sections in detail pages */
+.side-panel,
+[class*='SidePanel'],
+[class*='side-panel'] {
+  transition: background-color 0.15s ease-in-out;
+}
+
+/* ---------- Calendar page polish ----------
+ * Calendar.vue uses Tabs + FullCalendar internals.
+ * Tabs polish already applies via [role='tab'] rules above.
+ */
+.fc,
+[class*='fullcalendar'],
+[class*='FullCalendar'] {
+  --fc-border-color: var(--outline-gray-1, rgb(241 245 249 / 0.9)) !important;
+}
+
+.fc-event,
+[class*='fc-event'] {
+  border-radius: 0.5rem !important;
+  transition:
+    box-shadow 0.15s ease-in-out,
+    opacity 0.15s ease-in-out !important;
+}
+
+/* ---------- Conditions filter (CFConditions) ----------
+ * Already has `rounded-lg border border-outline-gray-2` in template.
+ * Just smooth its transitions.
+ */
+[class*='CFCondition'],
+[class*='CFConditions'] {
+  transition: border-color 0.15s ease-in-out;
+}
+
+/* ---------- Page chrome consistency ----------
+ * Make sure breadcrumbs, view title areas have consistent typography
+ */
+[class*='breadcrumb'],
+[class*='Breadcrumb'] {
+  letter-spacing: -0.005em;
+}
